@@ -15,9 +15,10 @@ class KwiCon:
             'pass': password,
             'remember': 'true'
         })
+        print('Logging in %s' %user)
         # Check if login success
         r = self.client.get('https://www.kwikku.com')
-        if re.search('Dodi Haryadi', r.text, re.IGNORECASE):
+        if re.search(user, r.text, re.IGNORECASE):
             print('Login Success')
         else:
             print(r.text)

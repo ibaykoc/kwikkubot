@@ -1,9 +1,14 @@
 from KwikkuConnection import KwiCon
 from KwikkuDatabase import KwiDB
 import sys
+import getpass
 
 # Create client
-KWICON = KwiCon('dodiharyadi', 'dodiituganteng')
+
+username = input('Username:')
+passwd = getpass.getpass('Password:')
+
+KWICON = KwiCon(username, passwd)
 KWIDB = KwiDB()
 while True:
     print('\nWhat do you want to do?\n1. Send Message\n2. List All Local User Id\n3. Get User Detail Information\n4. Exit')
