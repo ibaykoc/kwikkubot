@@ -8,8 +8,6 @@ username = input('Username:')
 password = getpass.getpass('Password:')
 
 KWICON = KwiCon(username, password)
-all_user = KWICON.get_all_user_id_in_discover('a',10000)
-print(len(all_user))
 while True:
     print('\n'
           '1. Do chat bot\n'
