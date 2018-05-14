@@ -1,6 +1,7 @@
 import requests
 import re
 import sys
+import json
 
 class KwiCon:
 
@@ -25,9 +26,24 @@ class KwiCon:
             print('Login Failed')
             sys.exit()
 
-    def get_all_userid_in_find_riends(self):
+    def get_all_userid_in_find_friends(self):
         r = self.client.get('https://www.kwikku.com/i/settings/findfriends')
         return re.findall('<div class=\'boxchat nolink\'><a href=\'https://www.kwikku.com/(.*?)\'', r.text)
+
+    def get_all_user_id_in_discover(self, keyword, page):
+        r = self.client.post('https://www.kwikku.com/core/core_ajax_data/get_search_pages.php', {
+            'act': 'users',
+            'keyword': keyword,
+            'loaddata': page * 21
+        })
+        rList = []
+        if r.text == 'null':
+            return rList
+        rDecoded = json.loads(r.text);
+        for user in rDecoded:
+            rList.append(user['username'])
+        return rList
+            
 
     def send_message(self, user_id, message_body):
         """
