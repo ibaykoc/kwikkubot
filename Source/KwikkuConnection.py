@@ -11,19 +11,25 @@ class KwiCon:
         self.login(user, password)
 
     def login(self, user, password):
-        self.client.post('https://www.kwikku.com/auth_login.php', {
+        print('Logging in %s' %user)
+        r = self.client.post('https://www.kwikku.com/auth_login.php', {
             'user': user,
             'pass': password,
             'remember': 'true'
         })
-        print('Logging in %s' %user)
         # Check if login success
-        r = self.client.get('https://www.kwikku.com')
-        if re.search(user, r.text, re.IGNORECASE):
-            print('Login Success')
+        rDecoded = json.loads(r.text);
+        result_code = rDecoded[0]['result']
+        if result_code == '1':
+            print('Incorrect username')
+            sys.exit()
+        elif result_code == '2':
+            print('You are logged in!')
+        elif result_code == '3':
+            print('Incorrect password!')
+            sys.exit()
         else:
-            print(r.text)
-            print('Login Failed')
+            print('Login Failed: %s' % rDecoded[0]['result'])
             sys.exit()
 
     def get_all_userid_in_find_friends(self):
