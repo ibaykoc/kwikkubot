@@ -32,6 +32,7 @@ while True:
                     print('\nSend message to %s (Success)\n' % uid)
                 else:
                     print('\nSend message to %s (Failed)\n' % uid)
+            page_index += 1
             if len(retrieved_user) < 21:
                 break
 
